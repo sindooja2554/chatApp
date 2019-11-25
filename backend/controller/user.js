@@ -1,70 +1,47 @@
-const User = require('../app/model/user')
-exports.create = (req, res) => {
-    // Validate request
-    if(!req.body.content) {
-        return res.status(400).send({
-            message: "Fields can not be empty"
-        });
+// const { check, validationResult } = require('express-validator');
+const controller = require('../services/user');
+
+// Validate request
+controller(req,res,function(err,data){[
+//function register(){
+    check('firstName')
+    .isEmpty()
+    .withmessage('Cannot be empty')
+    .isLength({ min: 3 })
+    .withmessage('Must be at least 3 chars long')
+    .isAlpha()
+    .withmessage('Must be only alphabetical chars'),
+
+    check('lastName')
+    .isEmpty()
+    .withmessage('Cannot be empty')
+    .isLength({ min: 3 })
+    .withmessage('Must be at least 3 chars long')
+    .isAlpha()
+    .withmessage('Must be only alphabetical chars'),
+
+    check('password')
+    .isEmpty()
+    .withmessage('Cannot be empty')
+    .isLength({ min: 8})
+    .withmessage('Must be at least 8 chars long')
+    .isAlphanumeric()
+    .withmessage('Must be alphabetical chars and numbers'),
+
+    check('email')
+    .isEmpty()
+    .withMessage('Cannot be empty')
+    .isLength({ min: 30})
+    .withMessage('Must be at least 30 chars long')
+    .isEmail()
+    .withMessage('Must be in email format')
+],(req,res)=>{
+    const error = validationResult(req)
+    if(error.isEmpty()){
+        return res.status(422).json({ errors: errors.array() })
     }
 
-    // Create a user
-    const user = new User({
-        firstName: req.body.firstName, //|| "Untitled Note", 
-        lastName: req.body.lastName,
-        password: req.body.password,
-        email: req.body.email
-    });
-
-    // Save Note in the database
-    user.save()
-    .then(data => {
-        res.send(data);
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Some error occurred while adding the user."
-        });
-    });
-};
-
-exports.display=(req,res) => {
-    user.find()
-    .then(notes => {
-        res.send(notes);
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Some error occurred while retrieving users."
-        });
-    });
-};
-
-exports.update = (req, res) => {
-    // Validate Request
-    if(!req.body.content) {
-        return res.status(400).send({
-            message: "Feilds can not be empty"
-        });
-    }
-
-    // Find note and update it with the request body
-    User.findByIdAndUpdate(req.params._ID, {
-        title: req.body.title || "Untitled Note",
-        content: req.body.content
-    }, {new: true})
-    .then(user => {
-        if(!user) {
-            return res.status(404).send({
-                message: "Note not found with id " + req.params._ID
-            });
-        }
-        res.send(user);
-    }).catch(err => {
-        if(err.kind === 'ObjectId') {
-            return res.status(404).send({
-                message: "Note not found with id " + req.params._ID
-            });                
-        }
-        return res.status(500).send({
-            message: "Error updating note with id " + req.params._ID
-        });
-    });
-};
+}})
+module.exports={
+    controller
+}

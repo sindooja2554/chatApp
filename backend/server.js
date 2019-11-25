@@ -17,9 +17,9 @@ mongoose.connect(dbConfig.url, {
     process.exit();
 });
 
-app.get('/', function (req, res) {
-    res.send('Hello ');
-});
+// app.get('/', function (req, res) {
+//     res.send('Hello ');
+// });
 
 app.listen(3000, function (err) {
     if (err) {
