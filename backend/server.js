@@ -1,11 +1,17 @@
 var express = require('express');
+const validator = require('express-validator');
+const route = require('./routes/routes')
 var app = express();
 const bodyParser = require('body-parser')
 // Configuring the database
 const dbConfig = require('./config/database.config');
 const mongoose = require('mongoose');
+
 app.use(bodyParser.json())
-app.use('/routes',require('./routes/routes'));
+app.use(validator());
+
+app.use('/', route);
+
 mongoose.Promise = global.Promise;
 // Connecting to the database
 mongoose.connect(dbConfig.url, {
