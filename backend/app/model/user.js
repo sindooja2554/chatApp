@@ -33,8 +33,7 @@ function encrptyPassword(password, callback) {
         if (err) {
             return callback(err);
         }
-        else
-        {
+        else {
             callback(null, data);
         }
 
@@ -90,10 +89,9 @@ module.exports = {
         }
     },
 
-    Userlogin : (req,callback) => {
-       
-        try
-        {
+    Userlogin: (req, callback) => {
+
+        try {
             //authenticating input using database
             User.findOne({ "email": req.email }, (err, data) => {
                 if (err) {
@@ -101,17 +99,19 @@ module.exports = {
                     return callback(err)
                 }
                 else {
-                    
+
                     if (data.password.length > 0) {
+
                         console.log('Email found');
                         console.log(req.password)
+
                         bcrypt.compare(req.password, data.password, (err, result) => {
                             if (err) {
-                                
+
                                 return callback(err);
                             }
                             else {
-                                
+
                                 if (result) {
                                     console.log('User Found' + data);
                                     return callback(null, data);
@@ -120,91 +120,83 @@ module.exports = {
                                 }
                             }
                         })
+
                     }
+
                 }
             })
         }
-        catch(err)
-        {
+        catch (err) {
             console.log(err)
         }
     },
 
     //forgot password api
-    forgotPassword:(req,callback)=>{
-        try 
-        {
-            User.findOne({"email":req.email},(err,data)=>{
-                if(err){
+    forgotPassword: (req, callback) => {
+        try {
+            User.findOne({ "email": req.email }, (err, data) => {
+                if (err) {
                     return callback(err);
-                }else{
-                    if(data.email.length<=0)
-                    {
+                } else {
+                    if (data.email.length <= 0) {
                         console.log('Email not matched');
-                        return callback(null,data);
-                    }else{
+                        return callback(null, data);
+                    } else {
                         console.log('Your email matched');
-                        return callback(null,data);
+                        return callback(null, data);
                     }
                 }
 
             })
         }
-        catch(err)
-        {
+        catch (err) {
             console.log(err)
         }
 
     },
 
     //reset password api
-    reserPassword:(req,callback)=>{
-        try
-        {           
-            encrptyPassword(req.password,(err,encryptedPassword)=>{
-                
-                if(err)
-                {
+    reserPassword: (req, callback) => {
+        try {
+            encrptyPassword(req.password, (err, encryptedPassword) => {
+
+                if (err) {
                     return callback(err)
-                }else{
-                    
-                    User.findOneAndUpdate({'_id' : req.id},{'password': encryptedPassword}
-                    ,(err,success)=>{
-                        if(err){
-                            return callback(err + " update password error")
-                        }else{
-                            console.log('Changed password succesfully');
-                            console.log("in model"+success)
-                            return callback(null,success);
-                        }
-                    })
+                } else {
+
+                    User.findOneAndUpdate({ '_id': req.id }, { 'password': encryptedPassword }
+                        , (err, success) => {
+                            if (err) {
+                                return callback(err + " update password error")
+                            } else {
+                                console.log('Changed password succesfully');
+                                console.log("in model" + success)
+                                return callback(null, success);
+                            }
+                        })
                 }
             })
         }
-        catch(err)
-        {
+        catch (err) {
             console.log(err)
         }
     },
 
     //retriving all user details
-    allUserDetails:(req,callback) => {
-        try{
+    allUserDetails: (req, callback) => {
+        try {
             //console.log(req)
-            User.find({},(err,data)=>{
-                if(err)
-                {
+            User.find({}, (err, data) => {
+                if (err) {
                     return callback(err)
                 }
-                else
-                {
+                else {
                     console.log(data)
-                    return callback(null,data);
+                    return callback(null, data);
                 }
             })
         }
-        catch(err)
-        {
+        catch (err) {
             console.log(err)
         }
     },

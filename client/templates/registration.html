@@ -1,0 +1,32 @@
+<div class="form-fields">
+    <div>
+        <div class="label">
+            <label for="firstname">Enter your First name: </label><br>
+        </div>
+        <input type="text" class="text-field" placeholder="FirstName " ng-model="firstName">
+    </div>
+    <div>
+        <div class="label">
+            <label for="lastname">Enter your Last name: </label><br>
+        </div>
+        <input type="text" class="text-field" placeholder="LastName " ng-model="lastName">
+    </div>
+    <div>
+        <div class="label">
+            <lable for="email">Email Id: </lable><br>
+        </div>
+        <input type="email" class="text-field" placeholder="Email" ng-model="email">
+    </div>
+    <div>
+        <div class="label">
+            <label for="password">Password: </label><br>
+        </div>
+        <input type="password" class="text-field" placeholder="Password" ng-model="password">
+    </div>
+    <div class="forgot-button">
+        <button ng-click="register()" class="button">Register</button><br>
+    </div>
+    <div class="login">
+        <a ui-sref="login">login? </a>
+    </div>
+</div>
