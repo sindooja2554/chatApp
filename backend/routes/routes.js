@@ -14,8 +14,7 @@ router.post('/registration',controller.createUserController)
 router.post('/forgetpassword',controller.forgetPasswordController)           //put is taking a parameter id
 
 //updating password in database
-router.post('/resetpassword/:id',token.verifyToken,controller.resetPasswordController)
-
+router.post('/reset',token.verifyToken,controller.resetPasswordController)
 
 //delete user in database
 router.get('/display',controller.allUserDetailsController)

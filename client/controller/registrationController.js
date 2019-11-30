@@ -1,6 +1,5 @@
-
 chatApp.controller("registrationController", function ($scope,serviceRegister) {
-    // console.log("app",$scope);
+    console.log("app",$scope.firstName);
     $scope.register =function()  {
         // console.log("cont")
         var user =

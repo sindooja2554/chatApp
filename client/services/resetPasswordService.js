@@ -1,11 +1,13 @@
 chatApp.service('resetService', function ($http, $location) {
     this.resetPasswordUser = function (data, $scope) {
-        console.log("data on service login---", data);
+        console.log("data on service reset---", data);
         $http({
             method: 'POST',
-            url: 'http://localhost:3000/resetpassword/:id',
+            url: 'http://localhost:3000/reset',
+            headers:{
+                token:data.token
+            },
             data: data
-
         }).then((response) => {
             console.log(response);
             $scope.message = "reset password successful";

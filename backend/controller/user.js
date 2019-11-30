@@ -1,5 +1,6 @@
 //const validationResult = require('express-validator');
-
+const jwtTokenGenerator = require('../utility/tokenGenerator');
+const mailSender = require('../utility/mailSender');
 const userServices = require('../services/user');
 module.exports={
     createUserController(request,response)
@@ -92,9 +93,23 @@ module.exports={
                     res.err = err
                     return response.status(500).send(res);
                 }else{
-                    res.success=data.success;
-                    res.data = data;                    
-                    return response.status(200).send(res)
+                    if (data) {
+                        let payload = {
+                            '_id': data._id,
+                            'email': data.email
+                        }
+                        //get token from jwt
+                        let jwtToken = jwtTokenGenerator.generateToken(payload);
+
+                        data.token = jwtToken
+                        return response.status(200).send(res)
+                    }
+                    else {
+                        return response.status(200).send(res)
+                    }
+                    // res.success=data.success;
+                    // res.data = data;                    
+                    // return response.status(200).send(res)
                 }
             })
         }
@@ -128,9 +143,16 @@ module.exports={
                     res.err = err
                     return response.status(500).send(res);
                 }else{
-                    res.success=data.success;
-                    res.data = data;
-                    return response.status(200).send(res)
+                    console.log(request.data)
+                    let payload = {
+                        '_id': data._id
+                    }
+                    let jwtToken = jwtTokenGenerator.generateToken(payload);
+                    //data.token = token;
+                    let url = 'http://localhost:3000/#/resetpassword/' + jwtToken.token;
+                    mailSender.sendMail(data.email, url);
+
+                    return response.status(200).send({ data, token: jwtToken.token })
                 }
             })
         }
@@ -138,15 +160,17 @@ module.exports={
 
     resetPasswordController(request,response)
     {
+        console.log(request.body)
         request.checkBody('password','Cannot be empty').notEmpty();
         request.checkBody('password','Must be at least 8 chars long').isLength({min:8})
-        request.checkBody('password','Must be in between 8  to 12 chars long').isLength({max:12})
+        
         request.checkBody('password','Must be alphabetical chars and numbers').isAlphanumeric('en-US')
         
         let res={};
         const errors = request.validationErrors()        
         if(errors)
         {
+            console.log('err')
             res.success= false;
             res.error = errors;
             return response.status(500).send(res);
@@ -157,7 +181,6 @@ module.exports={
                 password : request.body.password,
                 id: request.decoded._id
             }
-
             //call userServices methods and pass the object
             userServices.resetPasswordService(resetObject,(err,data)=>{
                 if(err)

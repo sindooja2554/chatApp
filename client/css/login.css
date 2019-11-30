@@ -4,14 +4,22 @@ body{
     background-size: cover;
 }
 
-.form-fields{
+.form-fields{ 
     width: 360px;
     padding: 10% 0 0;
     margin: auto; 
-    position: center;
 }
 
-.register{
+.avatar{
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    position: absolute;
+    top: -50px;
+    left: calc(50%-20px);
+}
+
+.login{
     position: relative;
     z-index: 1;
     background: whitesmoke;
@@ -24,11 +32,10 @@ body{
 #form{
     font-family: "Roboto",sans-serif;
     outline: 1;
-    background: #f2f2f2;
     width: 100%;
     border: 0;
-    margin: 0 0 10px;
-    padding: 10px;
+    margin: 0 0 20px;
+    padding: 15px;
     box-sizing: border-box;
     font-size: 14px;
 }
@@ -44,8 +51,9 @@ body{
     font-size: 14px;
 }
 
-.register-button{
+.login-button{
     font-family: "Roboto",sans-serif;
+    text-transform: uppercase;
     outline: 0;
     width: 100%;
     border: 0;
@@ -53,9 +61,4 @@ body{
     color: #FFFFFF;
     font-size: 14px;
     cursor: pointer;
-}
-
-.error{
-    margin-top: 0px;
-    color: red;
 }

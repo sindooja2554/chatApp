@@ -1,23 +1,23 @@
-<!-- <div ng-app="chatApp" ng-controller="loginController" class="login-fields">
-        <h3 class="h3"><b>Log In</b></h3>-->
-
-<div>
-    <div class="label">
-        <lable for="email">Email Id: </lable><br>
+<div class="form-fields">
+    <div class="login">
+        <h4>Sign In</h4>
+        <img src="../assets/avatar.jpg" class="avatar">
+        <div class="form">
+            <div class="label">
+                <input type="email" class="text-field" placeholder="Email" ng-model="email">
+            </div>
+            <div class="label">
+                <input type="password" class="text-field" placeholder="Password" ng-model="password">
+            </div>
+            <div class="login-button">
+                <button ng-click="login()" class="btn btn-success">Log in</button><br>
+            </div>
+        </div>
+        <div class="forgot-link">
+            <a href="/#/forgotpassword">Forgot Password? </a>
+        </div>
+        <div class="registration-link"></div>
+        <a href="/#/register">Create Account? </a>
     </div>
-    <input type="email" id="email" class="text-field" placeholder="Email" ng-model="email">
 </div>
-<div>
-    <div class="label">
-        <label for="password">Password: </label><br>
-    </div>
-    <input type="password" id="password" class="text-field" placeholder="Password" ng-model="password">
 </div>
-<div class="forgot-link">
-    <a ui-sref="forgotpassword">forgot password? </a>
-    <button ng-click="login()" class="button">Log in</button><br>
-</div>
-<div class="account">
-    <a ui-sref="register">create account? </a>
-</div>
-<!--</div>-->

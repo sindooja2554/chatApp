@@ -163,7 +163,7 @@ module.exports = {
                 if (err) {
                     return callback(err)
                 } else {
-
+                    console.log(req.id)
                     User.findOneAndUpdate({ '_id': req.id }, { 'password': encryptedPassword }
                         , (err, success) => {
                             if (err) {
