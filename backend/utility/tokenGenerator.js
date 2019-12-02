@@ -3,7 +3,7 @@ let jwt = require('jsonwebtoken');
 module.exports={
     generateToken(payload)
     {
-        console.log("2"+payload)
+        console.log("2",JSON.stringify(payload))
         let token=jwt.sign(payload,"privateKey",{
             expiresIn:'24h'      //expires in 24 hours
         });

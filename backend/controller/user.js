@@ -153,7 +153,7 @@ module.exports={
                 {
                         console.log(data)
                         let payload = {
-                            '_id': data._id
+                            '_id': data.data._id
                             // email:data.email
                         }
                         let jwtToken = jwtTokenGenerator.generateToken(payload);
@@ -173,7 +173,7 @@ module.exports={
 
     resetPasswordController(request,response)
     {
-        console.log("ctrl",request.body)
+        console.log("ctrl",request.body.data._id)
         request.checkBody('password','Cannot be empty').notEmpty();
         request.checkBody('password','Must be at least 8 chars long').isLength({min:8})        
         request.checkBody('password','Password contain alphabetical chars and numbers').isAlphanumeric()
@@ -191,7 +191,7 @@ module.exports={
         {
             let resetObject ={
                 password : request.body.password,            
-                id: request._id
+                id:request.body.data._id
             }
             console.log("pa",resetObject);
             //call userServices methods and pass the object
