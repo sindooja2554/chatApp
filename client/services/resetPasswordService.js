@@ -9,10 +9,19 @@ chatApp.service('resetService', function ($http, $location) {
             },
             data: data
         }).then((response) => {
-            console.log(response);
-            $scope.message = "reset password successful";
-            $location.path('/login');
+            console.log("in forntend",response);
+            if(response.data.success!==false)
+            {
+                alert(response.data.data.message);
+                $scope.message = "reset password successful";
+                $location.path('/login');
+            }
+            else
+            {
+                alert(response.data.message);
+            }
         }).catch((response) => {
+            alert(response.data.message)
             console.log("reset password unsuccessful", response);
             $scope.message = response.data.message;
         })

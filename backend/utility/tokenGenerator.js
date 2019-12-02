@@ -5,7 +5,7 @@ module.exports={
     {
         console.log("2"+payload)
         let token=jwt.sign(payload,"privateKey",{
-            expiresIn:'24h'      //(in sec)expires in 6 hours
+            expiresIn:'24h'      //expires in 24 hours
         });
 
         let object = {
@@ -19,21 +19,29 @@ module.exports={
 
     verifyToken(req,res,next)
     {
-        let token = req.header('token');
+        let token = req.headers['token']
+        console.log(" token after vread",token);
+        
         if(token)
         {
-            jwt.verify(token,"privateKey",(err,data)=>{
+            jwt.verify(token,'privateKey',function (err,decoded){
+                console.log(" token in ",token);
+                
+                // console.log("tkg",data);
                 if(err)
                 {
                     return res.status(400).send(err+"Token has expired")
                 }
                 else{
-                    console.log("token"+JSON.stringify(data));
-                    req.decoded = data;
-                    next();
+                    console.log("token",JSON.stringify(decoded));
+                    // console.log("\nJWT verification result: " + JSON.stringify(data));
+                    req.body['data'] = decoded;
+               // console.log(req.body);
+               req.token = decoded;
+               next();
                 }
             })
-            //return req.decoded;
+            // return req.decoded;
         }
         else{
             res.status(400).send('Token not received')

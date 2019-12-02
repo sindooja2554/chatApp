@@ -11,6 +11,7 @@ chatApp.controller("registrationController", function ($scope,serviceRegister) {
         }
         console.log(user);
         serviceRegister.registerUser(user,$scope);
+
     }
    
 });

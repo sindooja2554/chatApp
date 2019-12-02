@@ -9,7 +9,7 @@ chatApp.controller('resetPasswordController', function($stateParams,$scope,reset
             'password': $scope.password,
             'token': $stateParams.token
         }
-        // console.log(user.token);
+        console.log(user.token);
         resetService.resetPasswordUser(user,$scope);
     }
 });

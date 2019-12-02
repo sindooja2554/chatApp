@@ -1,4 +1,3 @@
-angular.module('app', ['ngStorage'])
 chatApp.service('forgotService', function ($http, $location) {
     this.forgotPasswordUser = function (data, $scope) {
         console.log("data on service forgot---", data);
@@ -7,17 +6,27 @@ chatApp.service('forgotService', function ($http, $location) {
             url: 'http://localhost:3000/forgetpassword',
             data: data
         }).then((response) => {
-            console.log("response---",response.data.data.token);
-            $scope.message = "mail sent successfully";
-            localStorage.setItem("token",response.data.data.token)
-        }).catch((response) => {
-            if(data.email==undefined)
+            console.log(response);
+            if(response.data.success==false)
             {
-                alert("Email must be filled");
+                alert(response.data.res.message)
             }
-            else{
-                alert("Email is invalid");                
+            else
+            {
+                if(response.data.success!==true)
+                {
+                    alert(response.data.res.message);
+                }
+                else
+                {
+                    console.log("response---",response.data.data.token);
+                    $scope.message = "mail sent successfully";
+                    // localStorage.setItem("token",response.data.data.token)
+                }
             }
+        }).catch((response) => {
+            console.log(response.data.message)
+            alert(response.data.message);
             $scope.message = response.data.message;
         })
     }

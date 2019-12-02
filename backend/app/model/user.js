@@ -34,6 +34,7 @@ function encrptyPassword(password, callback) {
             return callback(err);
         }
         else {
+            console.log("hash ",data);
             callback(null, data);
         }
 
@@ -45,15 +46,21 @@ module.exports = {
     //adding new user
     registration: (req, callback) => {
         try {
+            var response={};
             console.log(req.email)
             User.findOne({ "email": req.email }, (err, data) => {
                 console.log(data);
                 if (err) {
                     console.log(err)
                 }
-                // else if (data.email.length > 0) {
-                //     console.log('Email already exist');
-                // }
+                else if (data) {
+                    console.log("data",data.email);
+                    /** when email is already present  */
+                    console.log("\n\n\t email already exits");
+                    response.success = false;
+                    response.message = "email already exits"
+                    return callback(null, response);
+                }
                 else {
                     encrptyPassword(req.password, (err, encryptedPassword) => {
                         if (err) {
@@ -69,14 +76,21 @@ module.exports = {
                                 "password": encryptedPassword,
                                 "email": req.email
                             })
-
+                            /** 
+                             * @purpose save registration data into schema 
+                             * @returns data if schema save successfully
+                            */
                             createUser.save((err, data) => {
                                 if (err) {
                                     return callback(err)
                                 }
                                 else {
-                                    console.log('Registration successfull' + data.firstName);
-                                    return callback(null, data)
+                                    /* send message to service callback function */
+                                    response.success = true;
+                                    response.message = "Registration successful";
+                                    response.data = data;
+                                    console.log('Registration successful ' , data.firstName);
+                                    return callback(null, response)
                                 }
                             })
                         }
@@ -92,15 +106,15 @@ module.exports = {
     Userlogin: (req, callback) => {
 
         try {
+            var response={};
             //authenticating input using database
             User.findOne({ "email": req.email }, (err, data) => {
+                console.log(data)
                 if (err) {
                     console.log('Error finding the email of the user');
                     return callback(err)
                 }
-                else {
-
-                    if (data.password.length > 0) {
+                else if (data!==null) {
 
                         console.log('Email found');
                         console.log(req.password)
@@ -111,18 +125,26 @@ module.exports = {
                                 return callback(err);
                             }
                             else {
-
-                                if (result) {
-                                    console.log('User Found' + data);
-                                    return callback(null, data);
+                                if (result) 
+                                {
+                                    response.success = true;
+                                    response.message = "Yaaa Login Successful ";
+                                    response.data = result
+                                    return callback(null, response)
                                 } else {
-                                    return callback(null, 'Password not matched');
+                                    response.success=false;
+                                    response.message="Password not matched";
+                                    return callback(null,response);
                                 }
                             }
                         })
 
-                    }
-
+                }
+                else {
+                    console.log("Login failed because Email not registered");
+                    response.success = false;
+                    response.message = "Login failed because Email not registered";
+                    callback(null, response);
                 }
             })
         }
@@ -134,20 +156,28 @@ module.exports = {
     //forgot password api
     forgotPassword: (req, callback) => {
         try {
+            var response={}
             User.findOne({ "email": req.email }, (err, data) => {
+                console.log(data);
                 if (err) {
                     return callback(err);
-                } else {
-                    if (data.email.length <= 0) {
-                        console.log('Email not matched');
-                        return callback(null, data);
-                    } else {
-                        console.log('Your email matched');
-                        return callback(null, data);
-                    }
+                } 
+                else if (data!==null) {
+                    console.log('Your email matched');
+                    response.success = true;
+                    response.message = " Your Email  matched";
+                    response.data=data;
+                    console.log("ha",response.data);
+                    return callback(null, response);
                 }
-
-            })
+                else 
+                {
+                        console.log("Your Email not matched");
+                        response.success = false;
+                        response.message = " Your Email not matched";                    
+                        return callback(null, response)
+                    }
+                })
         }
         catch (err) {
             console.log(err)
@@ -158,6 +188,8 @@ module.exports = {
     //reset password api
     reserPassword: (req, callback) => {
         try {
+            console.log("req",req.body);
+            var response={}
             encrptyPassword(req.password, (err, encryptedPassword) => {
 
                 if (err) {
@@ -168,10 +200,14 @@ module.exports = {
                         , (err, success) => {
                             if (err) {
                                 return callback(err + " update password error")
-                            } else {
+                            } 
+                            else 
+                            {
                                 console.log('Changed password succesfully');
-                                console.log("in model" + success)
-                                return callback(null, success);
+                                console.log("in model" , success)
+                                response.success=true;
+                                response.message='Changed password succesfully';
+                                return callback(null, response);
                             }
                         })
                 }

@@ -12,7 +12,6 @@ app.use(express.static('../client'));
 app.use(bodyParser.json())
 app.use(validator());
 app.use(cors());
-
 app.use('/', route);
 
 mongoose.Promise = global.Promise;

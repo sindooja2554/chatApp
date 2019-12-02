@@ -7,12 +7,24 @@ chatApp.service('loginService', function ($http, $location) {
             data: data
 
         }).then((response) => {
-            console.log("login successful");
-            console.log(response);
-            $scope.message = "login successful";
-            //$location.path('/login');
+            if(response.data.success==true)
+            {
+                console.log("login successful");
+                console.log(response);
+                alert(response.data.message);
+                $scope.message = "login successful";
+            }
+            else
+            {
+                console.log(response);
+                alert(response.data.message);
+                $scope.message = "login unsuccessful"; 
+                $location.path('/login');
+            }
         }).catch((response) => {
             console.log("login unsuccessful", response);
+            console.log("msg",response.data.message)
+            alert(response.data.message);
             $scope.message = response.data.message;
         })
     }
