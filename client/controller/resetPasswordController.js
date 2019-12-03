@@ -1,6 +1,6 @@
-
 chatApp.controller('resetPasswordController', function($stateParams,$scope,resetService)
 {
+    $scope.passRe = /^[a-zA-Z0-9]+$/;
     console.log("data in controller--> ", $scope)
     $scope.saveChanges = function()
     {

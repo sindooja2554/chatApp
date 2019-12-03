@@ -1,22 +1,34 @@
 <div class="form-fields">
     <div class="register">
         <h4>Sign Up</h4>
-        <form  name="registrationform">
+        <form  name="registrationForm">
             <div class="label">
-                <input type="text" name="firstName" class="text-field" placeholder="FirstName " ng-model="firstName" ng-required="true" ng-minlength="3">
+                <input type="text" name="firstName" class="text-field" placeholder="FirstName " ng-model="firstName" ng-pattern="nameRe" ng-required="true" ng-minlength="3">
+                <div ng-show="registrationForm.firstName.$touched && registrationForm.firstName.$invalid || registrationForm.firstName.$error.pattern">
+                    <small style="color:black; display:block; text-align:center">Please Enter Valid First Name of minimum 3 characters eg.(john)</small>
+                </div>         
             </div>
             <div class="label">
-                <input type="text" class="text-field" placeholder="LastName " ng-model="lastName">
+                <input type="text" name="lastName" class="text-field" placeholder="LastName " ng-model="lastName" ng-pattern="nameRe" ng-required="true" ng-minlength="3">
+                <div ng-show="registrationForm.lastName.$touched && registrationForm.lastName.$invalid || registrationForm.lastName.$error.pattern">
+                    <small style="color:black; display:block; text-align:center">Please Enter Last Name of minimum 3 characters eg.(mathew)</small>
+                </div>    
             </div>
             <div class="label">
-                <input type="email" class="text-field" placeholder="Email" ng-model="email">
+                <input type="email" name="email" class="text-field" placeholder="Email" ng-model="email" ng-pattern="emailRe" ng-required="true" >
+                <div ng-show="registrationForm.email.$touched && registrationForm.email.$invalid || registrationForm.email.$error.pattern">
+                    <small style="color:black; display:block; text-align:center">Please Enter Email eg.(john.doe@gmail.com)</small>
+                </div>             
             </div>
             <div class="label">
-                <input type="password" class="text-field" placeholder="Password" ng-model="password">
+                <input type="password" name="password" class="text-field" placeholder="Password" ng-model="password" ng-pattern="passRe" ng-required="true" ng-minlength="8">
+                <div ng-show="registrationForm.password.$touched && registrationForm.password.$invalid || registrationForm.password.$error.pattern">
+                    <small style="color:black; display:block; text-align:center">Please Enter Password of minimum 8 characters and Password should contain only characters and numbers</small>
+                </div>             
             </div>
         </form>
         <div class="register-button">
-            <button ng-click="register()" class="btn btn-success">Register</button><br>
+            <button ng-click="register()" ng-disabled="registrationForm.$invalid" class="btn btn-success">Register</button><br>
         </div>
         <div class="login-link">
                 <a href="/#/login">Already Registered? </a>

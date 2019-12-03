@@ -2,22 +2,28 @@
     <div class="login">
         <h4>Sign In</h4>
         <!-- <img src="../assets/avatar.jpg" class="avatar"> -->
-        <div class="form">
+        <form  name="loginForm">
             <div class="label">
-                <input type="email" class="text-field" placeholder="Email" ng-model="email">
+                <input type="email" name="email" class="text-field" placeholder="Email" ng-model="email" ng-pattern="emailReg" ng-required="true" >
+                <div ng-show="loginForm.email.$touched && loginForm.email.$invalid || loginForm.email.$error.pattern">
+                    <small style="color:black; display:block; text-align:center">Please Enter Email eg.(john.doe@gmail.com)</small>
+                </div>             
             </div>
             <div class="label">
-                <input type="password" class="text-field" placeholder="Password" ng-model="password">
+                <input type="password" name="password" class="text-field" placeholder="Password" ng-model="password" ng-pattern="passReg" ng-required="true" ng-minlength="8">
+                <div ng-show="loginForm.password.$touched && loginForm.password.$invalid || loginForm.password.$error.pattern">
+                    <small style="color:black; display:block; text-align:center">Please Enter Password of minimum 8 characters and Password should contain only characters and numbers</small>
+                </div>             
             </div>
             <div class="login-button">
-                <button ng-click="login()" class="btn btn-success">Log in</button><br>
+                <button ng-click="login()" ng-disabled="loginForm.$invalid" class="btn btn-success">Log in</button><br>
             </div>
-        </div>
+        </form>
         <div class="forgot-link">
             <a href="/#/forgotpassword">Forgot Password? </a>
         </div>
         <div class="registration-link"></div>
         <a href="/#/register">Create Account? </a>
+        </div>
     </div>
-</div>
 </div>

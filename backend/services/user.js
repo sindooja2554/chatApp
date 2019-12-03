@@ -61,7 +61,7 @@ module.exports = {
     resetPasswordService(request, callback) {
         try {
             console.log("in services");
-            console.log("aa",request.data);
+            console.log("aa",request.body);
             //call model method for saving reset password details
             userModel.reserPassword(request, (err, data) => {
                 if (err) {

@@ -41,8 +41,12 @@ function encrptyPassword(password, callback) {
     })
 }
 
-
 module.exports = {
+    /**
+     * @description-This function register user with the app and user data is stored in database
+     * @param {} req
+     * @param {} callback
+     */
     //adding new user
     registration: (req, callback) => {
         try {
@@ -103,6 +107,12 @@ module.exports = {
         }
     },
 
+    /**
+     * @description-In this function user logins to the application and 
+     *              then token is generated, the generated token is then stored in th header.
+     * @param {} req
+     * @param {} callback
+     */
     Userlogin: (req, callback) => {
 
         try {
@@ -128,7 +138,7 @@ module.exports = {
                                 if (result) 
                                 {
                                     response.success = true;
-                                    response.message = "Yaaa Login Successful ";
+                                    response.message = "Yeah Login Successful ";
                                     response.data = result
                                     return callback(null, response)
                                 } else {
@@ -153,6 +163,13 @@ module.exports = {
         }
     },
 
+    /**
+     * @description-In this function user request to change the password, to change the password 
+     *              user enters the email id registered with the application. If the email id given 
+     *              by user is present in database then the reset password link is sent to the email.  
+     * @param {} req
+     * @param {} callback
+     */
     //forgot password api
     forgotPassword: (req, callback) => {
         try {
@@ -185,6 +202,13 @@ module.exports = {
 
     },
 
+    /**
+     * @description-In this function user change the password of the account. The changed 
+     *              password is then updated in the database. User can now login using the 
+     *              new/changed password.  
+     * @param {} req
+     * @param {} callback
+     */
     //reset password api
     reserPassword: (req, callback) => {
         try {

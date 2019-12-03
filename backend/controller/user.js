@@ -2,6 +2,7 @@
 const jwtTokenGenerator = require('../utility/tokenGenerator');
 const mailSender = require('../utility/mailSender');
 const userServices = require('../services/user');
+// var urlShortner  = require('../utility/urlShortener');
 module.exports={
     createUserController(request,response)
     {
@@ -159,6 +160,8 @@ module.exports={
                         let jwtToken = jwtTokenGenerator.generateToken(payload);
                         //data.token = token;
                         let url = 'http://localhost:3000/#/resetpassword/' + jwtToken.token;
+                        // var urlCode = urlShortner.shortUrl(url);
+                        // let shortUrl = 'http://localhost:3000/#/resetpassword/' + urlCode;
                         mailSender.sendMail(data.data.email, url);
                         res.success=data.success,
                         console.log("else of contrl",res.success)

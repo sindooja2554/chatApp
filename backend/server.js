@@ -2,6 +2,7 @@ var express = require('express');
 var cors = require('cors')
 const validator = require('express-validator');
 const route = require('./routes/routes')
+const client = require('socket.io').listen(3000).sockets;
 var app = express();
 const bodyParser = require('body-parser')
 // Configuring the database
@@ -25,11 +26,11 @@ mongoose.connect(dbConfig.url, {
     process.exit();
 });
 
-// app.get('/', function (req, res) {
-//     res.send('Hello ');
-// });
+// client.on('connection',function(){
 
-app.listen(3000, function (err) {
+// })
+
+app.listen(3001, function (err) {
     if (err) {
         console.log('Something went wrong');
     }
