@@ -31,7 +31,6 @@ chatApp.config(function ($stateProvider, $urlRouterProvider) {
                 templateUrl: 'templates/resetPassword.html',
                 controller: 'resetPasswordController'
             });
-
-
+     
     $urlRouterProvider.otherwise('/login');
 });

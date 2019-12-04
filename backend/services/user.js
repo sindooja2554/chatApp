@@ -1,6 +1,7 @@
 var userModel = require('../app/model/user');
 
-module.exports = {
+class userService
+{
     createUserServices(request, callback) {
         try {
             console.log(request)
@@ -18,7 +19,7 @@ module.exports = {
         } catch (error) {
             console.log(error);
         }
-    },
+    }
 
     loginServices(request, callback) {
         console.log('inservices')
@@ -38,7 +39,7 @@ module.exports = {
         catch (error) {
             console.log(error)
         }
-    },
+    }
 
     forgetPasswordService(request, callback)          //how to reset password 
     {
@@ -56,12 +57,12 @@ module.exports = {
         catch (error) {
             console.log(error);
         }
-    },
+    }
 
     resetPasswordService(request, callback) {
         try {
             console.log("in services");
-            console.log("aa",request.body);
+           
             //call model method for saving reset password details
             userModel.reserPassword(request, (err, data) => {
                 if (err) {
@@ -74,10 +75,10 @@ module.exports = {
                 }
             })
         }
-        catch (error) {
-            console.log(error);
+        catch (err) {
+            console.log(err);
         }
-    },
+    }
 
     userDetailsService(request, callback) {
         try {
@@ -98,3 +99,5 @@ module.exports = {
         }
     }
 }
+
+module.exports=new userService();

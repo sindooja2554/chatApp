@@ -13,9 +13,8 @@ module.exports={
         const mailOptions = {
             from: 'plsslnlsit@gmail.com',  // sender address
             to: email,  // list of receivers
-            subject: 'link to reset your password',  // Subject line
+            subject: 'link sent from nodemailer',  // Subject line
             text: 'click on the link '+url   
-            //html: '<p>Your html here</p>'   // plain text body
         };
         
         transporter.sendMail(mailOptions, function (err, info) {

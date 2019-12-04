@@ -19,12 +19,20 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: [true, 'Password is required']
     },
-
+    // urlCode: String,
+    // longURL: String,
+    // shortURL: String,
+    // date:{
+    //     type: String,
+    //     default: Date.now
+    // },
 },
     {
         timestamps: true
 
-    });
+});
+
+
 var User = mongoose.model('User', UserSchema);
 
 //hashing a password before saving it to the database
@@ -41,14 +49,16 @@ function encrptyPassword(password, callback) {
     })
 }
 
-module.exports = {
+class userModel
+{
     /**
      * @description-This function register user with the app and user data is stored in database
      * @param {} req
      * @param {} callback
      */
     //adding new user
-    registration: (req, callback) => {
+    registration(req, callback) 
+    {
         try {
             var response={};
             console.log(req.email)
@@ -59,7 +69,7 @@ module.exports = {
                 }
                 else if (data) {
                     console.log("data",data.email);
-                    /** when email is already present  */
+                    /* when email is already present  */
                     console.log("\n\n\t email already exits");
                     response.success = false;
                     response.message = "email already exits"
@@ -105,15 +115,17 @@ module.exports = {
         catch (err) {
             console.log(err)
         }
-    },
+    }
 
     /**
-     * @description-In this function user logins to the application and 
-     *              then token is generated, the generated token is then stored in th header.
+     * @description-In this function user logins to the application and then token
+     *              is generated, the generated token is then stored in the header
+     *              and the token can be used for further operations.
      * @param {} req
      * @param {} callback
      */
-    Userlogin: (req, callback) => {
+    Userlogin(req, callback)
+    {
 
         try {
             var response={};
@@ -141,7 +153,8 @@ module.exports = {
                                     response.message = "Yeah Login Successful ";
                                     response.data = result
                                     return callback(null, response)
-                                } else {
+                                } else 
+                                {
                                     response.success=false;
                                     response.message="Password not matched";
                                     return callback(null,response);
@@ -161,7 +174,7 @@ module.exports = {
         catch (err) {
             console.log(err)
         }
-    },
+    }
 
     /**
      * @description-In this function user request to change the password, to change the password 
@@ -171,7 +184,8 @@ module.exports = {
      * @param {} callback
      */
     //forgot password api
-    forgotPassword: (req, callback) => {
+    forgotPassword(req, callback)  
+    {
         try {
             var response={}
             User.findOne({ "email": req.email }, (err, data) => {
@@ -200,7 +214,7 @@ module.exports = {
             console.log(err)
         }
 
-    },
+    }
 
     /**
      * @description-In this function user change the password of the account. The changed 
@@ -210,7 +224,9 @@ module.exports = {
      * @param {} callback
      */
     //reset password api
-    reserPassword: (req, callback) => {
+
+    reserPassword(req, callback) 
+    {
         try {
             console.log("req",req.body);
             var response={}
@@ -218,32 +234,34 @@ module.exports = {
 
                 if (err) {
                     return callback(err)
-                } else {
+                } else 
+                {
                     console.log(req.id)
                     User.findOneAndUpdate({ '_id': req.id }, { 'password': encryptedPassword }
-                        , (err, success) => {
-                            if (err) {
-                                return callback(err + " update password error")
-                            } 
-                            else 
-                            {
-                                console.log('Changed password succesfully');
-                                console.log("in model" , success)
-                                response.success=true;
-                                response.message='Changed password succesfully';
-                                return callback(null, response);
-                            }
-                        })
+                    , (err, success) => 
+                    {
+                        if (err) {
+                            return callback(err + " update password error")
+                        }
+                        else {
+                            console.log('Changed password succesfully');
+                            console.log("in model", success)
+                            response.success = true;
+                            response.message = 'Changed password succesfully';
+                            return callback(null, response);
+                        }
+                    })
                 }
             })
         }
         catch (err) {
             console.log(err)
         }
-    },
+    }
 
     //retriving all user details
-    allUserDetails: (req, callback) => {
+    allUserDetails(req, callback)  
+    {
         try {
             //console.log(req)
             User.find({}, (err, data) => {
@@ -259,6 +277,34 @@ module.exports = {
         catch (err) {
             console.log(err)
         }
-    },
+    }
 
+    // urlShortener(request,response)
+    // {
+    //     try
+    //     {
+    //         User.findOne({"_id" : request.id},(error , data)=>{
+    //             if(error)
+    //             {
+    //                 return callback(error)
+    //             }
+    //             else
+    //             {
+    //                 var response = {};
+    //                 const data = {
+    //                     "longURL" : request.longURL,
+    //                     "shortURL": request.shortURL,
+    //                     "urlCode" : request.urlCode,
+    //                     "email"   : request.email
+    //                 }
+    //             }
+    //         })
+    //     }
+    //     catch(error)
+    //     {
+    //         console.log(error);
+    //     }
+    // }
 }
+
+module.exports= new userModel();

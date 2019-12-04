@@ -1,9 +1,9 @@
-//const validationResult = require('express-validator');
 const jwtTokenGenerator = require('../utility/tokenGenerator');
-const mailSender = require('../utility/mailSender');
-const userServices = require('../services/user');
-// var urlShortner  = require('../utility/urlShortener');
-module.exports={
+const mailSender        = require('../utility/mailSender');
+const userServices      = require('../services/user');
+// var urlShortner         = require('../utility/urlShortner');
+class userController
+{
     createUserController(request,response)
     {
         // request.checkBody('firstName','Cannot be empty').notEmpty();
@@ -28,18 +28,18 @@ module.exports={
         
         if(errors)
         {
-            res.success= false;
-            res.message=errors[0].msg;
-            res.error = errors;
+            res.success = false;
+            res.message = errors[0].msg;
+            res.error   = errors;
             return response.status(500).send(res);
         }
         else
         {
             let registrationObject ={
                 firstName : request.body.firstName,
-                lastName : request.body.lastName,
-                password : request.body.password,
-                email : request.body.email,
+                lastName  : request.body.lastName,
+                password  : request.body.password,
+                email     : request.body.email,
             }
 
             //call userServices methods and pass the object
@@ -47,19 +47,23 @@ module.exports={
                 if(err)
                 {
                     res.success = false,
-                    res.err = err
+                    res.err     = err
                     return response.status(500).send(res);  //HTTp code 500 - The request was not completed
-                }else{
-                    console.log("in controller of backend",data.message);
-                    res.success=data.success;
+                } else {
+                    let payload = {
+                        '_id': data._id,
+                        'email': data.email
+                    }
+
+                    res.success = data.success;
                     res.message = data.message;
                     res.data = data;
-                    console.log("res in back cont",res);
+                    console.log("res in back cont", res);
                     return response.status(200).send(res) //HTTp code 200 - successful response 
                 }
             })
         }
-    },
+    }
 
     loginController(request,response)
     {
@@ -73,16 +77,16 @@ module.exports={
         const error = request.validationErrors()
         if(error)
         {
-            res.success= false;
-            res.message=error[0].msg;
-            res.error = error;
+            res.success = false;
+            res.message = error[0].msg;
+            res.error   = error;
             return response.status(500).send(res);
         }
         else
         {
             
             let loginObject ={
-                email : request.body.email,              
+                email    : request.body.email,              
                 password : request.body.password,
             }
 
@@ -92,18 +96,18 @@ module.exports={
                 {                    
                     res.success = false,
                     res.message = data.message,
-                    res.err = err
+                    res.err     = err
                     return response.status(500).send(res);
                 }else{
                     if (data) {
                         let payload = {
-                            '_id': data._id,
+                            '_id'  : data._id,
                             'email': data.email
                         }
                         //get token from jwt
                         let jwtToken = jwtTokenGenerator.generateToken(payload);
-
-                        data.token = jwtToken
+                      
+                        data.token  = jwtToken
                         res.success = data.success,
                         res.message = data.message
                         return response.status(200).send(res)
@@ -111,7 +115,7 @@ module.exports={
                 }
             })
         }
-    },
+    }
 
     forgetPasswordController(request,response)
     {
@@ -122,9 +126,9 @@ module.exports={
         const error = request.validationErrors()
         if(error)
         {
-            res.success= false;
-            res.message=error[0].msg;
-            res.error = error;
+            res.success = false;
+            res.message = error[0].msg;
+            res.error   = error;
             console.log(res);
             return response.status(500).send(res);
         }
@@ -141,21 +145,20 @@ module.exports={
                 {
                     console.log(err)
                     res.success = false,
-                    res.err = err
+                    res.err     = err
                     return response.status(500).send(res);
                 }
                 else if(data.success!==true)
                 {
-                        res.success=data.success,
-                        res.message=data.message
+                        res.success = data.success,
+                        res.message = data.message
                         return response.status(200).send(res) 
                 }
                 else
                 {
                         console.log(data)
                         let payload = {
-                            '_id': data.data._id
-                            // email:data.email
+                            '_id' : data.data._id
                         }
                         let jwtToken = jwtTokenGenerator.generateToken(payload);
                         //data.token = token;
@@ -163,16 +166,15 @@ module.exports={
                         // var urlCode = urlShortner.shortUrl(url);
                         // let shortUrl = 'http://localhost:3000/#/resetpassword/' + urlCode;
                         mailSender.sendMail(data.data.email, url);
-                        res.success=data.success,
-                        console.log("else of contrl",res.success)
-                        res.message="Link successfully sent to your Email",
-                        res.data=data
-                        console.log("alpha",data);
+                        res.success = data.success,
+                        res.message = "Link successfully sent to your Email",
+                        res.data    = data
+                        console.log("controller",data);
                         return response.status(200).send({ res, token: jwtToken.token })
                 }
             })
         }
-    },
+    }
 
     resetPasswordController(request,response)
     {
@@ -185,9 +187,9 @@ module.exports={
         if(errors)
         {
             console.log('err')
-            res.success= false;
-            res.message=errors[0].msg;
-            res.error = errors;
+            res.success = false;
+            res.message = errors[0].msg;
+            res.error   = errors;
             return response.status(500).send(res);
         }
         else
@@ -202,20 +204,20 @@ module.exports={
                 if(err)
                 {
                     res.success = false,
-                    res.err = err
+                    res.err     = err
                     return response.status(500).send(res);
                 }
                 else
                 {
-                    res.success=data.success;
-                    res.data = data;
+                    res.success = data.success;
+                    res.data    = data;
                     console.log("response in controller",data);
                     
                     return response.status(200).send(res)
                 }
             })
         }     
-    },
+    }
 
     allUserDetailsController(request,response)
     {  
@@ -229,9 +231,11 @@ module.exports={
                 return response.status(500).send(res);
             } else {
                 res.success = data.success;
-                res.data = data;
+                res.data    = data;
                 return response.status(200).send(res)
             }
         })
     }
 }
+
+module.exports=new userController();
