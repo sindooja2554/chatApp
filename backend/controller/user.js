@@ -20,7 +20,7 @@ class userController
     
         // // request.checkBody('email','Cannot be empty').notEmpty()
         request.checkBody('email','Email Must be in email format').isEmail()
-        request.checkBody('email','Email Must be at least 30 chars long').isLength({max:30})
+        request.checkBody('email','Email Must be at most 30 chars long').isLength({max:30})
         const errors = request.validationErrors();
         console.log(errors);
         
@@ -50,11 +50,6 @@ class userController
                     res.err     = err
                     return response.status(500).send(res);  //HTTp code 500 - The request was not completed
                 } else {
-                    let payload = {
-                        '_id': data._id,
-                        'email': data.email
-                    }
-
                     res.success = data.success;
                     res.message = data.message;
                     res.data = data;

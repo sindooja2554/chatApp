@@ -13,7 +13,7 @@ chatApp.service('loginService', function ($http, $location) {
                 console.log(response);
                 alert(response.data.message);
                 $scope.message = "login successful";
-                // $location.path('/dashboard');
+                $location.path('/dashboard');
             }
             else
             {

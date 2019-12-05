@@ -70,7 +70,7 @@ class ChatAPI
     {
         try {
             console.log("model")
-            Chat.findOne({}, (error, data) => {
+            Chat.find({}, (error, data) => {
                 if (error) {
                     return callback(error)
                 }

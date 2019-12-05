@@ -1,0 +1,16 @@
+#dashboard
+{
+    background-color: white;   
+    /* border-left:6px solid transparent; */
+}
+
+.users 
+{
+    border-left: 3px solid #397bff;;
+    height: 100vh;
+    margin-top: 56px;
+    position: absolute;
+    left: 50%;
+    margin-left: -309px;
+    top: 0;
+}

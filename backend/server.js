@@ -2,7 +2,9 @@ var express = require('express');
 var cors = require('cors')
 const validator = require('express-validator');
 const route = require('./routes/routes')
-// const client = require('socket.io').listen(3000).sockets;
+var server = require('http').Server(app);
+// var client = require('socket.io')(http);
+const io = require('socket.io')(server);
 var app = express();
 const bodyParser = require('body-parser')
 // Configuring the database
@@ -26,9 +28,25 @@ mongoose.connect(dbConfig.url, {
     process.exit();
 });
 
-// client.on('connection',function(){
-
-// })
+io.on('connection', function (socket) {
+    console.log("socket is connected successfully");
+    socket.on('createMessage', function (message) {
+        console.log(" listening create message ", message);
+        chatcontroller.addMessage(message, (err, data) => {
+            console.log('msg from server', message)
+            if (err) {
+                console.log("Error in message", err);
+            }
+            else {
+                console.log(message, "in server");
+                io.emit(message.receiverId, message);// message is going to only reciever not going to self and whole group
+            }
+        })
+        socket.on('disconnect', function () {
+            console.log("Socket disconnected");
+        });
+    });
+});
 
 app.listen(3000, function (err) {
     if (err) {
@@ -39,3 +57,5 @@ app.listen(3000, function (err) {
 
     }
 });
+
+

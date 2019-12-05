@@ -70,9 +70,9 @@ class userModel
                 else if (data) {
                     console.log("data",data.email);
                     /* when email is already present  */
-                    console.log("\n\n\t email already exits");
+                    console.log("\n\n\t email already exist");
                     response.success = false;
-                    response.message = "email already exits"
+                    response.message = "email already exist"
                     return callback(null, response);
                 }
                 else {
@@ -260,7 +260,7 @@ class userModel
     }
 
     //retriving all user details
-    allUserDetails(req, callback)  
+    getAllUsers(req, callback)  
     {
         try {
             //console.log(req)
