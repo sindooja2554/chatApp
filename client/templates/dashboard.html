@@ -3,6 +3,7 @@
 </head>
 
 <div class=dashboard>
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="justify-content:space-between;">
         <a class="navbar-brand" href="#">ChatApp</a>
         <div class="logout-button">
@@ -10,36 +11,20 @@
         </div>
     </nav>
 
-    <section>
-        
+    <div class="split left">
         <nav class="users">
             <p ng-repeat="x in allUser" ng-click="person(x)" ng-show="currentUserName!=x.firstname">
                 {{x.firstname}}</p>
         </nav>
+    </div>
 
-        <article>
-            <div>
-                <p class="username"><b>{{receiverUserName}}</b></p>
-            </div>
-
-            <section>
-                <form>
-                    <div class="chatLogs" ng-repeat="chat in allUserArr">
-                        <div class="chat user" ng-show="currentUser != chat.senderUserId">
-                            <p class="chatMsg"> {{chat.message}}</p>
-                        </div>
-                        <div class="chat self" ng-show="currentUser == chat.senderUserId">
-                            <p class="chatMsg"> {{chat.message}}</p>
-                        </div>
-                    </div>
-                </form>
-            </section>
-
-        </article>
-
-    </section>
+    <div class="split right">
+         <p class="username"><b>{{receiverUserName}}</b></p>
+    </div>
 
 </div>
+
+
 <!-- <html ng-controller="chatapp">
 
 

@@ -1,16 +1,45 @@
-#dashboard
-{
-    background-color: white;   
-    /* border-left:6px solid transparent; */
-}
 
-.users 
+.split {
+    height: 100%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+  }
+  
+  .left {
+    margin-left: -306;
+    border-left: 3px solid #397bff;
+    margin-top: 56px;
+    background-color: white;
+    position: fixed;
+    left: 50%;
+  }
+  
+  .right {
+    right: 0;
+    background-image: url('../assets/chatbackground.jpeg');
+    left: 347px;
+    width: 74%;
+    /* max-width: 8132px; */
+    top: 56px;
+  }
+/* .users 
 {
-    border-left: 3px solid #397bff;;
+    background-color: blue;
+    border-left: 3px solid #397bff;
     height: 100vh;
     margin-top: 56px;
-    position: absolute;
+    position: fixed;
     left: 50%;
     margin-left: -309px;
     top: 0;
 }
+
+.right
+{
+    background-color: white;
+    margin-left: -309px;
+} */

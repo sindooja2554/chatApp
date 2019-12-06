@@ -12,6 +12,8 @@ chatApp.service('loginService', function ($http, $location) {
                 console.log("login successful");
                 console.log(response);
                 alert(response.data.message);
+                var token = response.data.token.token;
+                localStorage.setItem('token',token)
                 $scope.message = "login successful";
                 $location.path('/dashboard');
             }

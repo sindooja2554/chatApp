@@ -19,13 +19,6 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: [true, 'Password is required']
     },
-    // urlCode: String,
-    // longURL: String,
-    // shortURL: String,
-    // date:{
-    //     type: String,
-    //     default: Date.now
-    // },
 },
     {
         timestamps: true
@@ -140,7 +133,7 @@ class userModel
 
                         console.log('Email found');
                         console.log(req.password)
-
+                        console.log("email",data)
                         bcrypt.compare(req.password, data.password, (err, result) => {
                             if (err) {
 
@@ -151,7 +144,8 @@ class userModel
                                 {
                                     response.success = true;
                                     response.message = "Yeah Login Successful ";
-                                    response.data = result
+                                    console.log("in if",data)
+                                    response.data = data
                                     return callback(null, response)
                                 } else 
                                 {
@@ -263,7 +257,7 @@ class userModel
     getAllUsers(req, callback)  
     {
         try {
-            //console.log(req)
+            console.log('req')
             User.find({}, (err, data) => {
                 if (err) {
                     return callback(err)

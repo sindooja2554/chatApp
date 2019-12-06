@@ -35,7 +35,7 @@ chatApp.config(function ($stateProvider, $urlRouterProvider) {
             {
                 url: '/dashboard',
                 templateUrl: 'templates/dashboard.html',
-                controller: 'dashboardController'
+                controller: 'chatController'
             });
      
     $urlRouterProvider.otherwise('/login');

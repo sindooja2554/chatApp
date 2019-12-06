@@ -2,6 +2,7 @@ chatApp.controller("loginController", function ($scope,loginService) {
     $scope.passReg = /^[a-zA-Z0-9]+$/;
     $scope.emailReg = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     console.log("data in controller--> ", $scope)
+    console.log("tokerxdfdn--",$scope.token);
     $scope.login =  () => {
         var userCredentials =
         {

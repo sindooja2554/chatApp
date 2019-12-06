@@ -95,6 +95,7 @@ class userController
                     return response.status(500).send(res);
                 }else{
                     if (data) {
+                        console.log("aaaaaaaaaaa",data)
                         let payload = {
                             '_id'  : data._id,
                             'email': data.email
@@ -102,9 +103,12 @@ class userController
                         //get token from jwt
                         let jwtToken = jwtTokenGenerator.generateToken(payload);
                       
-                        data.token  = jwtToken
+                        data.token  = jwtToken,
+                        res.token   = data.token,
                         res.success = data.success,
-                        res.message = data.message
+                        res.message = data.message,
+                        res.data    = data
+                        console.log("abc",res);
                         return response.status(200).send(res)
                     }
                 }
@@ -217,6 +221,8 @@ class userController
     allUserDetailsController(request,response)
     {  
         let res={}
+        console.log("ctrl");
+        
         //call userServices methods and pass the object
         userServices.userDetailsService(request, (err, data) => {
             if (err) {

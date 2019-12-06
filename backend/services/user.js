@@ -83,7 +83,7 @@ class userService
     userDetailsService(request, callback) {
         try {
             //call model method for saving reset password details
-            userModel.allUserDetails(request, (err, data) => {
+            userModel.getAllUsers(request, (err, data) => {
                 if (err) {
                     //send error to controller callback function
                     return callback(err)
