@@ -10,10 +10,14 @@ chatApp.service('loginService', function ($http, $location) {
             if(response.data.success==true)
             {
                 console.log("login successful");
-                console.log(response);
+                console.log("s",response);
                 alert(response.data.message);
                 var token = response.data.token.token;
-                localStorage.setItem('token',token)
+                localStorage.setItem('token',token);
+                localStorage.setItem('firstName',response.data.data.data.firstName);
+                localStorage.setItem('_id',response.data.data.data._id);
+                localStorage.setItem('email',response.data.data.data.email);
+                console.log("p",response.data.data.data);
                 $scope.message = "login successful";
                 $location.path('/dashboard');
             }

@@ -13,13 +13,23 @@
 
     <div class="split left">
         <nav class="users">
-            <p ng-repeat="x in allUser" ng-click="person(x)" ng-show="currentUserName!=x.firstname">
-                {{x.firstname}}</p>
+            <div ng-repeat="x in getAllUsers" ng-click="person(x)" ng-show="currentUserName!=x.firstName">
+            <button class="displayname" >
+                {{x.firstName}}</button>                           
+             </div>   
         </nav>
-    </div>
+    </div> 
 
     <div class="split right">
-         <p class="username"><b>{{receiverUserName}}</b></p>
+        <div class="name">
+            <p class="username"><bold>{{receiverName}}</bold></p>
+        </div>
+        <div ng-repeat="y in getAllMessages">
+            {{y.message}}
+        </div>
+        <div class="textbox">
+            <textarea ng-model="message"></textarea>
+        </div>
     </div>
 
 </div>

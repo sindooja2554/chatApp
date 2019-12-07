@@ -1,23 +1,85 @@
 chatApp.controller('chatController', function ($scope, SocketService, $state, chatServices) {
     console.log("snfjsdnfjndjfndsnfjasn")
     $scope.message = '';
-    $scope.allUserArr = [];
+    $scope.getAllMessages = [];
     
     //assign the data from localstorage
-    $scope.currentUserName = localStorage.getItem('name');
-    $scope.currentUser = localStorage.getItem('userid');
-    $scope.receiverUserName = localStorage.getItem('rusername');
+    $scope.currentUserName = localStorage.getItem('firstName');
+    $scope.currentUserId = localStorage.getItem('_id');
+    // $scope.receiverUserName = localStorage.getItem('rusername');
     var token = localStorage.getItem("token");
     console.log("token",token);
-    console.log("ab",$scope.currentUserName)
+    console.log("usrnam",$scope.currentUserName);
+    console.log("usrnamID",$scope.currentUserId);
+
+    //getting all users
     $scope.getAllUsers = function () {
-        chatServices.getAllUsers($scope, token);
+        chatServices.getAllUsers($scope);
+    }
+    $scope.getAllUsers();
+
+    //Selecting user from the list
+    $scope.person = function (receiver){
+        console.log(" reciver^^&&^&&&",receiver._id);
+        $scope.getAllMessages='';
+        localStorage.setItem("receiverfirstName",receiver.firstName);
+        localStorage.setItem("receiverId",receiver._id);
+        $scope.receiverName = localStorage.getItem("receiverfirstName");
+        // $scope.receiver.Id  = localStorage.getItem("receiverId");
+       
+        $scope.getReceiverMessages();
     }
 
+    //getting all messages
+    $scope.getReceiverMessages = function(){
+                     var token = localStorage.getItem("token");
+        chatServices.getReceiverMessages($scope,token);
+    }
 
+    //sending new message
+    try{
+        $scope.send = function (){
+        var senderId     = localStorage.getItem('_id');
+        var senderName   = localStorage.getItem('firstName');
+        var receiverId   = localStorage.getItem('receiverId');
+        var receiverName = localStorage.getItem('receiverfirstName');
+        var msg ={
+            "senderId"     : senderId,
+            "senderName"   : senderName,
+            "receiverId"   : receiverId,
+            "receiverName" : receiverName,
+            "message"      : $scope.message
+        };
 
-
-
+        console.log("message details------------->",msg);
+        SocketService.emit('new message',msg);
+        $scope.getAllMessages.push(msg);
+        } 
+    }
+    catch(error)
+    {
+        console.log('Errors in sending message');
+    }
+    
+    try{
+        var senderId = localStorage.getItem('_id');
+        SocketService.on(senderId,(message)=>{
+            console.log("New Message --->",message);
+            if(localStorage.getItem("receiverId") == message.senderId){
+                if($scope.getAllMessages === undefined){
+                    $scope.getAllMessages = message
+                }
+                else
+                {
+                    $scope.getAllMessages.push(message);
+                }
+            }
+        })
+    }
+    catch(error)
+    {
+        console.log("Error");
+    }
 
 
 
