@@ -1,6 +1,6 @@
 /**
- * @description
- * @overview
+ * @description Connecting to database 
+ * @overview 
  * @summary
  * @file
  * 
@@ -67,3 +67,5 @@ class Database{
         });
     }
 }
+
+module.exports=new Database();

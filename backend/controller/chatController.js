@@ -2,18 +2,18 @@ var chatService = require('../services/chatService');
 
 class chatController
 {
-    sendMessageController(request,response)
+    sendMessageController(request,callback)
     {
         try
         {
-            console.log(request.body)
+            console.log("request in controller",request)
             console.log("in controller")
             let chatDetails = {
-                "senderId": request.body.senderId,
-                "receiverId": request.body.receiverId,
-                "senderName": request.body.senderName,
-                "receiverName": request.body.receiverName,
-                "message": request.body.message
+                "senderId": request.senderId,
+                "receiverId": request.receiverId,
+                "senderName": request.senderName,
+                "receiverName": request.receiverName,
+                "message": request.message
             }
             console.log(chatDetails)
             chatService.sendMessageService(chatDetails,(error , data)=>
@@ -25,14 +25,14 @@ class chatController
                     res.message = "Error";
                     res.error = error;
 
-                    return response.status(500).send(res)
+                    return callback(error)
                 }
                 else
                 {
                     console.log("data",data)
                     res.message = "msg sent";
                     res.data = data;
-                    return response.status(200).send(res)
+                    return callback(null,res)
                 }
             })
         }

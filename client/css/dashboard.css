@@ -1,3 +1,15 @@
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.dashboard{
+  /* display:flex;
+  justify-content: space-between; */
+  height: auto;
+
+}
 .split {
   height: 100%;
   width: 50%;
@@ -8,7 +20,9 @@
   padding-top: 20px;
 }
   
-.left {
+.left 
+{
+    display: flex;
     margin-left: -650px;
     border-right: 2px solid #2b4c8c;
     margin-top: 56px;
@@ -17,6 +31,7 @@
     left: 51%;
     max-width: 323px;
     width: -259px;
+    flex-direction: flex;
 }
   
 .right {
@@ -35,7 +50,7 @@
   font-size: 22px;
   cursor: pointer;
   color: black;
-  width: 100%;
+  width: 307px;
   height: 50px;
   display: flex;
   flex-direction: flex;
@@ -52,6 +67,7 @@
 
 .textbox textarea
 {
+  display: flex;
   width: 100%;
   border-radius: 41px;
   overflow: hidden;
@@ -59,14 +75,48 @@
   outline: none;
   margin-top: 0px;
   margin-bottom: 0px;
-  height: 69px;
+  height: 35px;
 
-  }
+}
+
+.textbox{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    margin-top: 466px;
+}
     /* margin-top: 0px;
     margin-bottom: 0px;
     height: 24px;
     width: 73%;
     margin-left: 10px;
     border-radius: 10px; */
-  
 
+.messages{
+  width: 100%;
+  word-break: break-all;
+  display: flex;
+  flex-direction: column
+}
+
+.chatMsg{
+    margin-left: 10px;
+    margin-top: 15px;
+    border: 1px solid;
+    border-color: lightgrey;
+    background: whitesmoke;
+    width: 40%;
+    border-radius: 8px;
+}
+
+
+.chatMessage{
+margin-left: 340px;
+margin-top: 15px;
+border: 1px solid;
+border-color: lightgrey;
+background: lightgrey;
+width: 40%;
+border-radius: 8px;
+float: right
+}

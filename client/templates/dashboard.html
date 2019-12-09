@@ -4,7 +4,7 @@
 
 <div class=dashboard>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="justify-content:space-between;">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="justify-content:space-between; overflow: hidden;">
         <a class="navbar-brand" href="#">ChatApp</a>
         <div class="logout-button">
             <button ng-click="logout()" class='btn btn-success'>Logout</button><br>
@@ -19,83 +19,29 @@
              </div>   
         </nav>
     </div> 
-
+   <!-- {ng-click="person(x)"} -->
     <div class="split right">
         <div class="name">
             <p class="username"><bold>{{receiverName}}</bold></p>
         </div>
-        <div ng-repeat="y in getAllMessages">
-            {{y.message}}
+        <div class= "messages" ng-repeat="chat in messageArray">
+            <div class="chat user" ng-show="currentUserId != chat.senderId">
+                <div class="chatMsg">{{chat.message}}</div>
+            </div>
+            <div class="chat self" ng-show="currentUserId == chat.senderId">
+                <div class="chatMessage"> {{chat.message}}</div>
+            </div>
         </div>
-        <div class="textbox">
-            <textarea ng-model="message"></textarea>
+        <div class="textbox" ng-show="receiverName!==undefined">
+            <!-- <textarea ng-model="message"><button class="btn btn-success">Send</button></textarea> -->
+            <!-- <span> -->
+                <div > <textarea ng-model="message" ng-keyup="$event.keyCode == 13 && send()" rows="1" cols="90"
+                class="text" placeholder="Type something here " style="margin-left:15px "></textarea></div>
+                <div> <button type="button" ng-click=send(); class="btn btn-success" style="margin-left: 20px">Send</button></div>
+            <!-- </span> -->
         </div>
     </div>
 
 </div>
 
 
-<!-- <html ng-controller="chatapp">
-
-
-    
-    <body ng-controller="chatController">
-        <header>
-            <h1><b>CHAT APP</b></h1>
-            <span class="user">
-                <h5>Welcome</h5><h2>{{currentUserName}}</h2>
-                
-            </span><h6>
-            <button type="button" ng-click="logout()" class="logbutton">Logout</button></h6>
-        </header>
-    
-        <section>
-            
-            <nav>
-                <ul>
-                    <p><b>
-                            <h3>Users</h3>
-                        </b></p>
-    
-                </ul>
-                <p ng-repeat="x in allUser" ng-click="person(x)" ng-show="currentUserName!=x.firstname">
-                    {{x.firstname}}</p>
-            </nav>
-    
-            <article>
-    
-                <div>
-                    <p class="username"><b>{{receiverUserName}}</b></p>
-                </div>
-                <section>
-                    <form>
-                        <div class="chatLogs" ng-repeat="chat in allUserArr">
-                            <div class="chat user" ng-show="currentUser != chat.senderUserId">
-                                <p class="chatMsg"> {{chat.message}}</p>
-                            </div>
-                            <div class="chat self" ng-show="currentUser == chat.senderUserId">
-                               
-                                <p class="chatMsg"> {{chat.message}}</p>
-                               
-                            </div>
-                        </div>
-    
-    
-    
-    
-                </section>
-    
-                <div>
-                    <span> <textarea ng-model="message" ng-keyup="$event.keyCode == 13 && sendmessage()" rows="1" cols="70"
-                            class="text" placeholder="Type something here "></textarea>
-                        <button type="button" ng-click=sendmessage(); class="sendbtn">Send</button> </span>
-                </div>
-                </form>
-            </article>
-    
-        </section>
-    
-    
-    </body>
-    
-    </html> -->
