@@ -24,12 +24,14 @@
         <div class="name">
             <p class="username"><bold>{{receiverName}}</bold></p>
         </div>
-        <div class= "messages" ng-repeat="chat in messageArray">
-            <div class="chat user" ng-show="currentUserId != chat.senderId">
-                <div class="chatMsg">{{chat.message}}</div>
-            </div>
-            <div class="chat self" ng-show="currentUserId == chat.senderId">
-                <div class="chatMessage"> {{chat.message}}</div>
+        <div class="scroll">
+            <div class="messages" ng-repeat="chat in messageArray">
+                <div class="chat user" ng-show="currentUserId != chat.senderId">
+                    <div class="chatMsg">{{chat.message}}</div>
+                </div>
+                <div class="chat self" ng-show="currentUserId == chat.senderId">
+                    <div class="chatMessage"> {{chat.message}}</div>
+                </div>
             </div>
         </div>
         <div class="textbox" ng-show="receiverName!==undefined">
